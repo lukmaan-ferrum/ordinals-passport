@@ -1,0 +1,35 @@
+{
+  "name": "ordinals-passport",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.583.0",
+    "@fastify/aws-lambda": "^4.1.0",
+    "@fastify/formbody": "^7.4.0",
+    "@fastify/multipart": "^8.2.0",
+    "@types/aws-lambda": "^8.10.138",
+    "@types/node": "^20.12.12",
+    "aws-sdk": "^2.1627.0",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.27.0",
+    "mongodb": "^6.6.2",
+    "mongoose": "^8.4.0",
+    "pg": "^8.11.5",
+    "typescript": "^5.4.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.6",
+    "@types/uuid": "^9.0.8",
+    "serverless-offline": "^13.6.0"
+  }
+}

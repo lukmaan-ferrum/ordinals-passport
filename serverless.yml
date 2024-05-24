@@ -1,0 +1,82 @@
+service: ordinals-passport
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-2
+  role: arn:aws:iam::${env:AWS_ACCOUNT_ID}:role/serverless-lambda-ordinals-passport-role
+  environment:
+    MONGO_URI: ${env:MONGO_URI}
+    S3_BUCKET: ordinals-passport-pfps
+
+functions:
+  getVrfDocument:
+    handler: dist/lambda.handler
+    timeout: 25
+    events:
+      - http:
+          path: vrf/{vrf}
+          method: get
+          cors: true
+
+  updateWeb3Name:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          path: vrf/{vrf}/update/web3Name
+          method: post
+          cors: true
+
+  bulkUploadVrf:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          path: admin/vrf/bulkUpload
+          method: post
+          cors: true
+
+  getPassportsByTier:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          path: admin/passports
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                tier: true
+
+  doLottery:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          path: admin/lottery
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                winners: true
+                tiers: false
+
+  updatePfp:
+    handler: dist/lambda.handler
+    events:
+      - http:
+          path: vrf/{vrf}/update/pfp
+          method: post
+          cors: true
+
+  testConnectivity:
+    handler: dist/lambda.handler
+    memorySize: 1024
+    timeout: 29
+    events:
+      - http:
+          path: test-connectivity
+          method: get
+          cors: true
+
+plugins:
+  - serverless-offline

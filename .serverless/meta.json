@@ -1,0 +1,232 @@
+{
+  "/Users/yuba/Ferrum/ordinals-passport": {
+    "versionSfCore": null,
+    "versionFramework": "4.0.26",
+    "isWithinCompose": false,
+    "composeOrgName": null,
+    "servicePath": "/Users/yuba/Ferrum/ordinals-passport",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "ordinals-passport",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs20.x",
+        "region": "us-east-2",
+        "role": "arn:aws:iam::806611346442:role/serverless-lambda-ordinals-passport-role",
+        "environment": {
+          "MONGO_URI": "mongodb+srv://ordinal_passport_vrf_app:U7ifMfDBuI0cFuvD@ferrum-netwrok-dev-qa-u.kyjw1.mongodb.net/ordinal-passport-vrf-dev?retryWrites=true&w=majority",
+          "S3_BUCKET": "ordinals-passport-pfps"
+        },
+        "stage": "dev",
+        "versionFunctions": true
+      },
+      "functions": {
+        "getVrfDocument": {
+          "handler": "dist/lambda.handler",
+          "timeout": 25,
+          "events": [
+            {
+              "http": {
+                "path": "vrf/{vrf}",
+                "method": "get",
+                "cors": true
+              }
+            }
+          ],
+          "name": "ordinals-passport-dev-getVrfDocument"
+        },
+        "updateWeb3Name": {
+          "handler": "dist/lambda.handler",
+          "events": [
+            {
+              "http": {
+                "path": "vrf/{vrf}/update/web3Name",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ],
+          "name": "ordinals-passport-dev-updateWeb3Name"
+        },
+        "bulkUploadVrf": {
+          "handler": "dist/lambda.handler",
+          "events": [
+            {
+              "http": {
+                "path": "admin/vrf/bulkUpload",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ],
+          "name": "ordinals-passport-dev-bulkUploadVrf"
+        },
+        "getPassportsByTier": {
+          "handler": "dist/lambda.handler",
+          "events": [
+            {
+              "http": {
+                "path": "admin/passports",
+                "method": "get",
+                "cors": true,
+                "request": {
+                  "parameters": {
+                    "querystrings": {
+                      "tier": true
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "name": "ordinals-passport-dev-getPassportsByTier"
+        },
+        "doLottery": {
+          "handler": "dist/lambda.handler",
+          "events": [
+            {
+              "http": {
+                "path": "admin/lottery",
+                "method": "get",
+                "cors": true,
+                "request": {
+                  "parameters": {
+                    "querystrings": {
+                      "winners": true,
+                      "tiers": false
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "name": "ordinals-passport-dev-doLottery"
+        },
+        "updatePfp": {
+          "handler": "dist/lambda.handler",
+          "events": [
+            {
+              "http": {
+                "path": "vrf/{vrf}/update/pfp",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ],
+          "name": "ordinals-passport-dev-updatePfp"
+        },
+        "testConnectivity": {
+          "handler": "dist/lambda.handler",
+          "memorySize": 1024,
+          "timeout": 29,
+          "events": [
+            {
+              "http": {
+                "path": "test-connectivity",
+                "method": "get",
+                "cors": true
+              }
+            }
+          ],
+          "name": "ordinals-passport-dev-testConnectivity"
+        }
+      },
+      "plugins": [
+        "serverless-offline"
+      ]
+    },
+    "serviceRawFile": "service: ordinals-passport\n\nprovider:\n  name: aws\n  runtime: nodejs20.x\n  region: us-east-2\n  role: arn:aws:iam::${env:AWS_ACCOUNT_ID}:role/serverless-lambda-ordinals-passport-role\n  environment:\n    MONGO_URI: ${env:MONGO_URI}\n    S3_BUCKET: ordinals-passport-pfps\n\nfunctions:\n  getVrfDocument:\n    handler: dist/lambda.handler\n    timeout: 25\n    events:\n      - http:\n          path: vrf/{vrf}\n          method: get\n          cors: true\n\n  updateWeb3Name:\n    handler: dist/lambda.handler\n    events:\n      - http:\n          path: vrf/{vrf}/update/web3Name\n          method: post\n          cors: true\n\n  bulkUploadVrf:\n    handler: dist/lambda.handler\n    events:\n      - http:\n          path: admin/vrf/bulkUpload\n          method: post\n          cors: true\n\n  getPassportsByTier:\n    handler: dist/lambda.handler\n    events:\n      - http:\n          path: admin/passports\n          method: get\n          cors: true\n          request:\n            parameters:\n              querystrings:\n                tier: true\n\n  doLottery:\n    handler: dist/lambda.handler\n    events:\n      - http:\n          path: admin/lottery\n          method: get\n          cors: true\n          request:\n            parameters:\n              querystrings:\n                winners: true\n                tiers: false\n\n  updatePfp:\n    handler: dist/lambda.handler\n    events:\n      - http:\n          path: vrf/{vrf}/update/pfp\n          method: post\n          cors: true\n\n  testConnectivity:\n    handler: dist/lambda.handler\n    memorySize: 1024\n    timeout: 29\n    events:\n      - http:\n          path: test-connectivity\n          method: get\n          cors: true\n\nplugins:\n  - serverless-offline\n",
+    "command": [
+      "logs"
+    ],
+    "options": {
+      "function": "getVrfDocument",
+      "tail": true
+    },
+    "error": {
+      "message": "No existing streams for the function",
+      "stack": "ServerlessError2: No existing streams for the function\n    at AwsLogs.getLogStreams (file:///Users/yuba/.serverless/releases/4.0.26/package/dist/sf-core.js:484:6344)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async logs:logs (file:///Users/yuba/.serverless/releases/4.0.26/package/dist/sf-core.js:484:5793)\n    at async PluginManager.runHooks (file:///Users/yuba/.serverless/releases/4.0.26/package/dist/sf-core.js:668:9260)\n    at async PluginManager.invoke (file:///Users/yuba/.serverless/releases/4.0.26/package/dist/sf-core.js:668:10026)\n    at async PluginManager.run (file:///Users/yuba/.serverless/releases/4.0.26/package/dist/sf-core.js:668:10749)\n    at async Serverless.run (file:///Users/yuba/.serverless/releases/4.0.26/package/dist/sf-core.js:709:10075)\n    at async runFramework (file:///Users/yuba/.serverless/releases/4.0.26/package/dist/sf-core.js:1003:3037)\n    at async route (file:///Users/yuba/.serverless/releases/4.0.26/package/dist/sf-core.js:1006:2988)\n    at async Object.run2 [as run] (file:///Users/yuba/.serverless/releases/4.0.26/package/dist/sf-core.js:1006:4534)\n    at async Object.handler (file:///Users/yuba/.serverless/releases/4.0.26/package/dist/sf-core.js:1006:7462)",
+      "code": "NO_EXISTING_LOG_STREAMS"
+    },
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "583fe566-0bdd-487c-8c15-25b048461192",
+    "orgName": "ferrum",
+    "userId": "MCGN9RnjTbvZ0Tzd6Q",
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "ferrum",
+    "subscription": null,
+    "userEmail": "lukmaan.kolia@ferrum.network",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "806611346442",
+    "versionSf": "4.0.26",
+    "serviceProviderAwsCfStackName": "ordinals-passport-dev",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-2:806611346442:stack/ordinals-passport-dev/a8b536c0-196e-11ef-8545-0a67b6035cad",
+    "serviceProviderAwsCfStackCreated": "2024-05-24T01:40:53.994Z",
+    "serviceProviderAwsCfStackUpdated": "2024-05-24T01:41:56.190Z",
+    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "GetPassportsByTierLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-2:806611346442:function:ordinals-passport-dev-getPassportsByTier:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-ordinals-passport-dev-GetPassportsByTierLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "DoLotteryLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-2:806611346442:function:ordinals-passport-dev-doLottery:1",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-ordinals-passport-dev-DoLotteryLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "UpdatePfpLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-2:806611346442:function:ordinals-passport-dev-updatePfp:1",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-ordinals-passport-dev-UpdatePfpLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "GetVrfDocumentLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-2:806611346442:function:ordinals-passport-dev-getVrfDocument:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-ordinals-passport-dev-GetVrfDocumentLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "BulkUploadVrfLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-2:806611346442:function:ordinals-passport-dev-bulkUploadVrf:1",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-ordinals-passport-dev-BulkUploadVrfLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "UpdateWeb3NameLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-2:806611346442:function:ordinals-passport-dev-updateWeb3Name:2",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-ordinals-passport-dev-UpdateWeb3NameLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "TestConnectivityLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-2:806611346442:function:ordinals-passport-dev-testConnectivity:1",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-ordinals-passport-dev-TestConnectivityLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "ServiceEndpoint",
+        "OutputValue": "https://zz5nlinr59.execute-api.us-east-2.amazonaws.com/dev",
+        "Description": "URL of the service endpoint",
+        "ExportName": "sls-ordinals-passport-dev-ServiceEndpoint"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "ordinals-passport-dev-serverlessdeploymentbucket-bc2o9sc6mqm0",
+        "ExportName": "sls-ordinals-passport-dev-ServerlessDeploymentBucketName"
+      }
+    ]
+  }
+}
